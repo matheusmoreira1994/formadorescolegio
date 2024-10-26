@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exibir e Editar Dados com SheetDB</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .table-container {
+      width: 90%;
+      max-width: 1200px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table th, .table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .table th {
+      background-color: #3f2b96;
+      color: #fff;
+      font-weight: bold;
+    }
+    .table tr:hover {
+      background-color: #f2f2f2;
+    }
+    .edit-btn {
+      padding: 6px 12px;
+      color: #fff;
+      background-color: #3f2b96;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .edit-btn:hover {
+      background-color: #2c1f73;
+    }
+    .edit-form {
+      display: none;
+      width: 90%;
+      max-width: 600px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .edit-form input, .edit-form button, .edit-form label {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      font-size: 1em;
+    }
+    .update-btn {
+      background-color: #3f2b96;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .update-btn:hover {
+      background-color: #2c1f73;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>FORMADORES - COLEGIO SHALOM</h1>
+
+<div class="table-container">
+  <h1>Dados da Planilha</h1>
+  <table class="table" id="dataTable">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Cargo</th>
+        <th>Telefone</th>
+        <th>Estado Civil</th>
+        <th>Ingresso</th>
+        <th>Niver</th>
+        <th>FP</th>
+        <th>FC</th>
+        <th>Quant de formandos</th>
+        <th>Disponível para novos formandos?</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="edit-form" id="editForm">
+  <h2>Atualizar Cadastro</h2>
+  <input type="text" id="editNome" placeholder="Nome">
+  <input type="text" id="editCargo" placeholder="Cargo">
+  <input type="text" id="editTelefone" placeholder="Telefone">
+  <input type="text" id="editEstadoCivil" placeholder="Estado Civil">
+  <input type="text" id="editIngresso" placeholder="Ingresso">
+  <input type="text" id="editNiver" placeholder="Niver">
+  <input type="text" id="editFP" placeholder="FP">
+  <input type="text" id="editFC" placeholder="FC">
+  <input type="number" id="editQuantFormandos" placeholder="Quant de formandos">
+  <label>
+    Disponível para novos formandos?
+    <input type="checkbox" id="editDisponivel">
+  </label>
+  <button class="update-btn" onclick="updateRow()">Atualizar</button>
+</div>
+
+<script>
+  const SHEETDB_URL = 'https://sheetdb.io/api/v1/v756xndp4xvm1';
+  let currentRowId = null;
+
+  async function fetchData() {
+    try {
+      const response = await fetch(SHEETDB_URL);
+      const data = await response.json();
+      const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = '';
+
+      data.forEach(row => {
+        const rowElement = document.createElement('tr');
+        
+        ['Nome', 'Cargo', 'Telefone', 'Estado Civil', 'Ingresso', 'Niver', 'FP', 'FC', 'Quant de formandos', 'Disponível para novos formandos?'].forEach(field => {
+          const cellElement = document.createElement('td');
+          cellElement.textContent = row[field] || '';
+          rowElement.appendChild(cellElement);
+        });
+
+        const editCell = document.createElement('td');
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Editar';
+        editButton.className = 'edit-btn';
+        editButton.onclick = () => openEditForm(row);
+        editCell.appendChild(editButton);
+        rowElement.appendChild(editCell);
+
+        tableBody.appendChild(rowElement);
+      });
+    } catch (error) {
+      console.error('Erro ao buscar dados:', error);
+    }
+  }
+
+  function openEditForm(row) {
+    currentRowId = row.id; // Assumindo que há um campo 'id' em cada linha de dados
+    document.getElementById('editNome').value = row.Nome || '';
+    document.getElementById('editCargo').value = row.Cargo || '';
+    document.getElementById('editTelefone').value = row.Telefone || '';
+    document.getElementById('editEstadoCivil').value = row["Estado Civil"] || '';
+    document.getElementById('editIngresso').value = row.Ingresso || '';
+    document.getElementById('editNiver').value = row.Niver || '';
+    document.getElementById('editFP').value = row.FP || '';
+    document.getElementById('editFC').value = row.FC || '';
+    document.getElementById('editQuantFormandos').value = row['Quant de formandos'] || '';
+    document.getElementById('editDisponivel').checked = row['Disponível para novos formandos?'] === 'Sim';
+    document.getElementById('editForm').style.display = 'block';
+  }
+
+  async function updateRow() {
+    if (!currentRowId) {
+      console.error("ID da linha atual não encontrado!");
+      return;
+    }
+
+    const updatedData = {
+      Nome: document.getElementById('editNome').value,
+      Cargo: document.getElementById('editCargo').value,
+      Telefone: document.getElementById('editTelefone').value,
+      "Estado Civil": document.getElementById('editEstadoCivil').value,
+      Ingresso: document.getElementById('editIngresso').value,
+      Niver: document.getElementById('editNiver').value,
+      FP: document.getElementById('editFP').value,
+      FC: document.getElementById('editFC').value,
+      "Quant de formandos": document.getElementById('editQuantFormandos').value,
+      "Disponível para novos formandos?": document.getElementById('editDisponivel').checked ? 'Sim' : 'Não'
+    };
+
+    try {
+      const response = await fetch(`${SHEETDB_URL}/id/${currentRowId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData)
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert('Dados atualizados com sucesso!');
+        document.getElementById('editForm').style.display = 'none';
+        fetchData();
+      } else {
+        console.error("Erro ao atualizar:", result);
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar dados:', error);
+    }
+  }
+
+  fetchData();
+</script>
+
+</body>
+</html>
+
+
+simplifique, faça apenas um get, tire o botão de editar e deixe bem estilizado
