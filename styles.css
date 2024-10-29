@@ -1,0 +1,115 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .table-container {
+    width: 100%;
+    max-width: 1200px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #3f2b96;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .table tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .edit-btn {
+    padding: 6px 12px;
+    color: #fff;
+    background-color: #3f2b96;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-btn:hover {
+    background-color: #2c1f73;
+  }
+  
+  .edit-form {
+    display: none;
+    width: 90%;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-form input, .edit-form button, .edit-form label {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 1em;
+  }
+  
+  .update-btn {
+    background-color: #3f2b96;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .update-btn:hover {
+    background-color: #2c1f73;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .table-container, .edit-form {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .table th, .table td {
+      padding: 8px;
+      font-size: 0.9em;
+    }
+  
+    .edit-form input, .edit-form button, .edit-form label {
+      font-size: 0.9em;
+    }
+  }
+  
