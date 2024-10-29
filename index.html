@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formadores pessoais Shalom - Colégio Shalom</title>
+  <title>Formadores Pessoais - Colégio Shalom</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <h1>FORMADORES - COLEGIO SHALOM</h1>
-
-  <div class="table-container">
-    <h2>Dados da Planilha</h2>
-    <table class="table" id="dataTable">
+  <header>
+    <div class="logo">
+      <!-- Adicione sua logo aqui -->
+      <img src="sua-logo.png" alt="Logo" id="logo">
+    </div>
+    <h1>Formadores Pessoais - Colégio Shalom</h1>
+  </header>
+  
+  <main>
+    <table id="dataTable">
       <thead>
         <tr>
+          <th>ID</th>
           <th>Nome</th>
           <th>Cargo</th>
           <th>Telefone</th>
@@ -23,34 +28,16 @@
           <th>Niver</th>
           <th>FP</th>
           <th>FC</th>
-          <th>Quant de formandos</th>
-          <th>Disponível para novos formandos?</th>
-          <th>Ações</th>
+          <th>Quant de Formandos</th>
+          <th>Disponível para Novos Formandos?</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <!-- As linhas serão preenchidas dinamicamente pelo JavaScript -->
+      </tbody>
     </table>
-  </div>
-
-  <div class="edit-form" id="editForm">
-    <h2>Atualizar Cadastro</h2>
-    <input type="text" id="editNome" placeholder="Nome">
-    <input type="text" id="editCargo" placeholder="Cargo">
-    <input type="text" id="editTelefone" placeholder="Telefone">
-    <input type="text" id="editEstadoCivil" placeholder="Estado Civil">
-    <input type="text" id="editIngresso" placeholder="Ingresso">
-    <input type="text" id="editNiver" placeholder="Niver">
-    <input type="text" id="editFP" placeholder="FP">
-    <input type="text" id="editFC" placeholder="FC">
-    <input type="number" id="editQuantFormandos" placeholder="Quant de formandos">
-    <label>
-      Disponível para novos formandos?
-      <input type="checkbox" id="editDisponivel">
-    </label>
-    <button class="update-btn" onclick="updateRow()">Atualizar</button>
-  </div>
+  </main>
 
   <script src="script.js"></script>
-
 </body>
 </html>
