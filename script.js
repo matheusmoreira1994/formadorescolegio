@@ -12,7 +12,7 @@ async function fetchData() {
       const rowElement = document.createElement('tr');
 
       // Criação das células para cada campo
-      ['ID', 'Nome', 'Cargo', 'Estado Civil', 'Ingresso', 'Niver', 'FP', 'FC', 'Quant de formandos', 'Disponível para novos formandos?'].forEach(field => {
+      ['ID', 'Nome', 'Cargo', 'Estado Civil', 'Ingresso', 'Niver', 'FP', 'FC', 'Quant_Formandos', 'Disponivel_para_Novos_formandos'].forEach(field => {
         const cellElement = document.createElement('td');
         cellElement.textContent = row[field] || '';
         rowElement.appendChild(cellElement);
